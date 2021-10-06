@@ -1,0 +1,106 @@
+<html>
+<head>
+<script language = "javaScript">
+
+var picList = ["images/slides/Slide.1.Patrick.jpg",
+				"images/slides/Slide.2.Spongebob.jpg",
+				"images/slides/Slide.3.Plankton.jpg",
+				"images/slides/Slide.4.Squidward.jpg",
+				"images/slides/Slide.5.Gary.jpg",
+				"images/slides/Slide.6.Sandy.jpg"];
+
+var clipList = ["sounds/patrick.mp3",
+				"sounds/spongebob.mp3",
+				"sounds/plankton.mp3",
+				"sounds/squidward.mp3",
+				"sounds/gary.mp3",
+				"sounds/sandy.mp3"];
+				
+var clipLength = [5,5,4,2,12,3,3];
+var timer;
+
+var counter = 0;
+
+var autoStart = false;
+
+function nextPic()
+{
+	
+	document.getElementById("display").src = picList[counter];
+	document.getElementById("player").src = clipList[counter];
+	document.getElementById("player").play();
+	counter++;
+	
+	
+	incrementCounter();
+	
+
+}
+
+function run()
+{
+	if(autoStart == false)
+	{
+		autoStart = true;
+		document.getElementById("runButton").value = "stop";
+	}
+	else
+	{
+		autoStart = false;
+		document.getElementById("runButton").value = "Run Slideshow";
+	}
+	autoPlay(); 
+}
+
+function incrementCounter()
+{
+if( counter == picList.length - 1 )
+	{
+		counter = 0;
+	}
+	
+}
+
+function autoPlay()
+{
+	if( autoStart == true)
+	{
+		nextPic() ;
+		//var clipTime = clipLength=clipList;
+		timer = setTimeout( "autoPlay()", 11000);
+	}
+	else
+	{
+		clearTimeout(timer);
+	}
+
+
+}
+
+</script>
+</head>
+<body bgcolor= "lightblue">
+<center>
+<h1>My Slideshow!</h1>
+Click here <a href="index.html"> <b>to see my Index page!</b> </a>
+<br/>
+<br/>
+
+ <input type = "button" value = "Next picture" onclick = "nextPic()"/>
+<input type = "button" value = "Run Slideshow" onclick = "run()" id="runButton"/>
+
+
+
+
+
+<br/>
+<br/>
+
+<img src="images/curtain.jpg" id="display"/>
+
+<audio id="player"</audio>
+
+
+</center>
+</body>
+</html>
