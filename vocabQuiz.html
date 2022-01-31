@@ -1,0 +1,204 @@
+<html>
+<head>
+<script language = JavaScript>
+var counter = 0;
+var score = 0;
+var words = ["nebula",
+			 "star",
+			 "planet",
+			 "white dwarf",
+			 "dark matter",
+			 "space"
+			]
+			
+var defs = ["a dust cloud",
+			"a fixed luminous point",
+			"a celestial body",
+			"a small very dense star",
+			"darkness",
+			"nothingness"
+			]
+			
+			
+var asked = [ false,
+			  false,
+			  false,
+			  false,
+			  false
+			]
+			  
+var qAsked = 0;		  
+			  
+function nextQ()
+{
+	
+	var termsOrDefs = document.getElementById("terms").checked;
+	displayClue(termsOrDefs);
+	document.getElementById("answer").value = "";
+	
+	document.getElementById("image").style.visibility = "hidden";
+	
+}
+
+function displayClue(terms)
+{
+	
+	qAsked = getUnusedIndex();
+	if(terms == true)
+	{
+		document.getElementById("clue").value = words[qAsked];
+	}
+	else
+	{
+		document.getElementById("clue").value = defs[qAsked];
+	}
+	
+}
+
+function nextA()
+{
+	var termsOrDefs = document.getElementById("terms").checked;
+	checkAnswer(termsOrDefs)
+}
+
+
+function checkAnswer(terms)
+{
+	
+	var answerList;
+	if(terms == true) 
+	{
+		answerList = defs;
+		
+	}
+	else
+	{
+		answerList = words;
+	}
+	
+	var userAns = document.getElementById("answer").value
+	
+	
+	if(userAns == answerList[qAsked])
+	{
+		score += 5;
+		alert("Correct! Your score is "+score);
+		 
+		
+		document.getElementById("winLoss").src = "images/Yes.jfif";
+	}
+	else 
+	{
+		alert("Sorry, your score is incorrect");
+		 
+		
+		document.getElementById("winLoss").src = "images/No.jfif";
+	}
+	
+	var midPoint = window.innerWidth
+	document.getElementById("image").style.left = ((midPoint/2)-158);
+	document.getElementById("image").style.visibility = "visible";
+	
+	
+	if(counter < words.length-1) 
+	{
+		counter++;
+	}
+	else 
+	{
+		counter = 0
+		endQuiz();
+	}
+}
+
+function doStuff()
+{
+	var temp = getUnusedIndex();
+	if( temp >-1)
+		alert(temp);
+	else 
+		alert("All Question have been asked");
+}
+
+
+function getUnusedIndex()
+{
+	
+	var rand = Math.floor(Math.random()*asked.length);
+	
+	
+	
+	
+	if( qAsked < asked.length )
+	{
+		while( asked[rand] == true ) 
+		{
+			rand = Math.floor(Math.random()*asked.length);
+		}
+	}
+	else
+	{
+		rand = -1;
+	}
+	
+	
+	asked[rand] = true;
+	counter++;
+	
+	
+	return rand;
+}
+
+function endQuiz()
+{
+Alert("Good Job You Made It To The End! You scored " + score)
+	counter == 0;
+	for(i = 0; i < asked.length; i++)
+	{
+		asked[i] = false;
+	}
+	alert(asked)
+
+
+}
+
+
+</script>
+</head>
+<body>
+<center>
+<h1>Vocab Quiz</h1>
+
+<input type="radio" id="terms" name="qType" onchange="restart()" checked>
+  <label for="terms">Words</label>
+<input type="radio" id="defs" name="qType" on>
+  <label for="defs">Definitions</label>
+<input type="button" value="Next" onclick="nextQ()"/>
+
+<br/>
+
+
+
+<br/><br/>
+<input type = "text" id="clue" readonly size=40>
+
+<br/><br/>
+<input type = "text" id="answer" onfocusout="nextA()" size=40>
+
+<br/><br/>
+<input type="button" value="Check Answer" />
+
+
+<br/><br/>
+<br/><br/>
+<a href="index.html" style = "color:blue"> <b>Go Back to My Home Page</b> </a>
+</center> 
+
+<div id="image" style="position:absolute; top:250; left:450; visibility:hidden;">
+
+	<img id="winLoss" src=""images/Yes.jfif">
+
+</div>
+
+</body>
+</html>
